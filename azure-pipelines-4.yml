@@ -1,0 +1,35 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: windows-latest
+
+steps:
+      - task: VSBuild@1
+        inputs:
+          solution: '**\*.sln'
+
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'drop'
+          publishLocation: 'Container'
+
+      - task: AzureResourceManagerTemplateDeployment@3
+        inputs:
+          deploymentScope: 'Resource Group'
+          azureResourceManagerConnection: 'Azure for Students (826da009-e421-40bc-9bc5-1830e205a5c3)-1944'
+          subscriptionId: '826da009-e421-40bc-9bc5-1830e205a5c3'
+          action: 'Create Or Update Resource Group'
+          resourceGroupName: 'blob'
+          location: 'Australia Central 2'
+          templateLocation: 'Linked artifact'
+          csmFile: '$(Build.ArtifactStagingDirectory)/**/logic_app'
+          csmParametersFile: '$(Build.ArtifactStagingDirectory)/**/logic_app'
+          overrideParameters: '-logicAppName logics-app'
+          deploymentMode: 'Incremental'
