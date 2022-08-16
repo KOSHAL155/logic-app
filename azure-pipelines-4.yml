@@ -19,3 +19,14 @@ steps:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)'
           ArtifactName: 'drop'
           publishLocation: 'Container'
+              
+      - task: AzureFunctionApp@1
+        inputs:
+           azureSubscription: 'Azure for Students (826da009-e421-40bc-9bc5-1830e205a5c3)'
+           appType: 'functionApp'
+           appName: 'asfs'
+           deployToSlotOrASE: true
+           resourceGroupName: 'blob'
+           slotName: 'production'
+           package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+           deploymentMethod: 'auto'
