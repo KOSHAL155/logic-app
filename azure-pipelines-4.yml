@@ -15,23 +15,16 @@ pool:
   vmImage: windows-latest
 
 steps:
+      - task: UseDotNet@2
+        inputs:
+          version: '3.1.x'
+          packageType: sdk
+
       - task: VSBuild@1
         inputs:
           solution: '**\*.sln'
 
       - task: PublishBuildArtifacts@1
         inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-          ArtifactName: 'drop'
-          publishLocation: 'Container'
+          targetPath: '$(Pipeline.Workspace)\s\artifacts'
               
-      - task: AzureFunctionApp@1
-        inputs:
-           azureSubscription: 'Azure for Students (826da009-e421-40bc-9bc5-1830e205a5c3)'
-           appType: 'functionApp'
-           appName: 'asfs'
-           deployToSlotOrASE: true
-           resourceGroupName: 'blob'
-           slotName: 'production'
-           package: '$(System.DefaultWorkingDirectory)/**/*.zip'
-           deploymentMethod: 'auto'
