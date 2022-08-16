@@ -13,7 +13,7 @@ trigger:
 
 
 pool:
-  vmImage: window-latest
+  vmImage: windows-latest
 
 steps:
       - task: DotNetCoreCLI@2
