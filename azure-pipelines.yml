@@ -26,15 +26,10 @@ steps:
              rootFolderOrFile: '$(Build.BinariesDirectory)/publish_output'
              includeRootFolder: false
              archiveType: 'zip'
-             archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+             archiveFile: '$(Build.ArtifactStagingDirectory)/artifacts/$(Build.BuildId).zip'
              replaceExistingArchive: true
       - task: PublishBuildArtifacts@1
         inputs:
-          TargetPath: '$(Pipeline.Workspace)\s\artifacts'
+          TargetPath: '$(Build.ArtifactStagingDirectory)\artifacts'
           ArtifactName: 'drop'
           publishLocation: 'Container'
-      - task: PublishPipelineArtifact@1
-        inputs:
-          targetPath: '$(Pipeline.Workspace)'
-          artifact: 'fucntion app'
-          publishLocation: 'pipeline'    
