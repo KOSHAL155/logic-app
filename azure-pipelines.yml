@@ -30,6 +30,6 @@ steps:
              replaceExistingArchive: true
       - task: PublishBuildArtifacts@1
         inputs:
-          PathtoPublish: '$(Pipeline.Workspace)\s\artifacts'
+          TargetPath: '$(Pipeline.Workspace)\s\artifacts'
           ArtifactName: 'drop'
           publishLocation: 'Container'
