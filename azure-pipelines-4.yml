@@ -4,18 +4,27 @@
 # https://aka.ms/yaml
 
 trigger:
-- main
+  batch: true
+  branches:
+    include:
+    - master
+    - develop
+    - release/*
 
 pool:
   vmImage: windows-latest
 
 steps:
+      - task: UseDotNet@2
+        inputs:
+          version: '3.1.x'
+          packageType: sdk
+
       - task: VSBuild@1
         inputs:
           solution: '**\*.sln'
 
       - task: PublishBuildArtifacts@1
         inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-          ArtifactName: 'drop'
-          publishLocation: 'Container'
+          targetPath: '$(Pipeline.Workspace)\s\artifacts'
+              
