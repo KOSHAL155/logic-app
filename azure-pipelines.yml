@@ -30,6 +30,6 @@ steps:
              replaceExistingArchive: true
       - task: PublishBuildArtifacts@1
         inputs:
-          PathtoPublish: '$(Build.BinariesDirectory)\artifacts'
+          PathtoPublish: '$(Build.BinariesDirectory)'
           ArtifactName: 'drop'
           publishLocation: 'Container'
