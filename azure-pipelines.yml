@@ -26,10 +26,10 @@ steps:
              rootFolderOrFile: '$(Build.BinariesDirectory)/publish_output'
              includeRootFolder: false
              archiveType: 'zip'
-             archiveFile: '$(Build.ArtifactStagingDirectory)/artifacts/$(Build.BuildId).zip'
+             archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
              replaceExistingArchive: true
       - task: PublishBuildArtifacts@1
         inputs:
-          TargetPath: '$(Build.ArtifactStagingDirectory)\artifacts'
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
           ArtifactName: 'drop'
           publishLocation: 'Container'
