@@ -33,3 +33,8 @@ steps:
           TargetPath: '$(Pipeline.Workspace)\s\artifacts'
           ArtifactName: 'drop'
           publishLocation: 'Container'
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: '$(Pipeline.Workspace)'
+          artifact: 'fucntion app'
+          publishLocation: 'pipeline'    
