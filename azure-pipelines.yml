@@ -21,6 +21,14 @@ steps:
           command: 'build'
           projects: '**/*.csproj'
           arguments: '--output $(Build.BinariesDirectory)/publish_output --configuration Release'
+      - task: NuGetCommand@2
+        displayName: 'Restore NuGet packages'
+        inputs:
+          command: 'restore'
+          restoreSolution: '**/*.sln'
+          feedsToUse: 'select'
+          vstsFeed: '$(System.TeamProject)/logic_app'
+      
       - task: ArchiveFiles@2
         inputs:
              rootFolderOrFile: '$(Build.BinariesDirectory)/publish_output'
