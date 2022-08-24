@@ -42,14 +42,10 @@ steps:
           ArtifactName: 'drop'
           publishLocation: 'Container'
       - task: UniversalPackages@0
-        displayName: 'Publish to Azure Artifacts'
         inputs:
-          command: 'publish'
-          publishDirectory: '$(Build.ArtifactStagingDirectory)'
-          feedsToUsePublish: 'internal'
-          vstsFeedPublish: '$(System.TeamProject)/logic-app'
-          vstsFeedPackagePublish: 'nb_virtocommerce_webhook'
-          versionOption: 'custom'
-          versionPublish: '$(VCbuild.version)'
-          verbosity: 'Warning'
-
+          command: 'download'
+          downloadDirectory: '$(System.DefaultWorkingDirectory)'
+          feedsToUse: 'internal'
+          vstsFeed: '8b7d8509-3f91-4220-9d89-7c548fd0c3df/3d102f35-f655-4e88-8090-4a1c9c9ee512'
+          vstsFeedPackage: 'nb_virtocommerce_webhook'
+          vstsPackageVersion: '$(VCbuild.version)'
