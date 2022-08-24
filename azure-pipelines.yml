@@ -38,7 +38,7 @@ steps:
 - task: UniversalPackages@0
   inputs:
     command: 'publish'
-    publishDirectory: '$(Build.ArtifactStagingDirectory)/artifacts'
+    publishDirectory: '$(Build.ArtifactStagingDirectory)'
     feedsToUsePublish: 'internal'
     vstsFeedPublish: '8b7d8509-3f91-4220-9d89-7c548fd0c3df/3d102f35-f655-4e88-8090-4a1c9c9ee512'
     vstsFeedPackagePublish: 'nb_virtocommerce_webhook'
