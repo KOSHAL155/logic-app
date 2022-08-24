@@ -16,36 +16,31 @@ pool:
   vmImage: windows-latest
 
 steps:
-      - task: DotNetCoreCLI@2
-        inputs:
-          command: 'build'
-          projects: '**/*.csproj'
-          arguments: '--output $(Build.BinariesDirectory)/publish_output --configuration Release'
-      - task: NuGetCommand@2
-        displayName: 'Restore NuGet packages'
-        inputs:
-          command: 'restore'
-          restoreSolution: '**/*.sln'
-          feedsToUse: 'select'
-          vstsFeed: '$(System.TeamProject)/logic_app'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
+    arguments: '--output $(Build.BinariesDirectory)/publish_output --configuration Release'
       
-      - task: ArchiveFiles@2
-        inputs:
-             rootFolderOrFile: '$(Build.BinariesDirectory)/publish_output'
-             includeRootFolder: false
-             archiveType: 'zip'
-             archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-             replaceExistingArchive: true
-      - task: PublishBuildArtifacts@1
-        inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-          ArtifactName: 'drop'
-          publishLocation: 'Container'
-      - task: UniversalPackages@0
-        inputs:
-          command: 'download'
-          downloadDirectory: '$(System.DefaultWorkingDirectory)'
-          feedsToUse: 'internal'
-          vstsFeed: '8b7d8509-3f91-4220-9d89-7c548fd0c3df/3d102f35-f655-4e88-8090-4a1c9c9ee512'
-          vstsFeedPackage: 'nb_virtocommerce_webhook'
-          vstsPackageVersion: '$(VCbuild.version)'
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.BinariesDirectory)/publish_output'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+     
+- task: UniversalPackages@0
+  inputs:
+    command: 'publish'
+    publishDirectory: '$(Build.ArtifactStagingDirectory)'
+    feedsToUsePublish: 'internal'
+    vstsFeedPublish: '8b7d8509-3f91-4220-9d89-7c548fd0c3df/3d102f35-f655-4e88-8090-4a1c9c9ee512'
+    vstsFeedPackagePublish: 'nb_virtocommerce_webhook'
+    versionOption: 'patch'
