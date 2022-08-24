@@ -41,3 +41,14 @@ steps:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)'
           ArtifactName: 'drop'
           publishLocation: 'Container'
+      - task: UniversalPackages@0
+        displayName: 'Publish to Azure Artifacts'
+        inputs:
+          command: 'publish'
+          publishDirectory: '$(Build.SourcesDirectory)\artifacts\$(VCbuild.artifact)'
+          feedsToUsePublish: 'internal'
+          vstsFeedPublish: '$(System.TeamProject)/NB_Marketplace_Artifact'
+          vstsFeedPackagePublish: 'nb_virtocommerce_order'
+          versionOption: 'custom'
+          versionPublish: '$(VCbuild.version)'
+          verbosity: 'Warning'
