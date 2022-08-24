@@ -45,7 +45,7 @@ steps:
         displayName: 'Publish to Azure Artifacts'
         inputs:
           command: 'publish'
-          publishDirectory: '$(Build.SourcesDirectory)\artifacts\$(VCbuild.artifact)'
+          publishDirectory: '$(Build.ArtifactStagingDirectory)\artifacts\$(VCbuild.artifact)'
           feedsToUsePublish: 'internal'
           vstsFeedPublish: '$(System.TeamProject)/logic-app'
           vstsFeedPackagePublish: 'nb_virtocommerce_webhook'
